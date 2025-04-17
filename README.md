@@ -77,6 +77,5 @@ python3 ./website-monitor/website_monitor.py
 
 系统每5分钟进行一次状态检查，通过尝试拉取busybox镜像来测试镜像源的可用性。
 
-## 许可证
-
-[License信息]
+## 工具截图
+![工具截图](./website-monitor/static/1.png)
