@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DockerHub加速器可用性监控</title>
+    <style>
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .speaker-icon {
+            animation: blink 1.5s infinite;
+        }
+
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f0f0f0; }
+        .status-container { max-width: 800px; margin: 0 auto; }
+        .target-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .status-card { 
+            background: #f5f5f5; 
+            padding: 20px; 
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-title { font-size: 0.8em; margin-bottom: 4px; }
+        .status-value { font-size: 1em; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+    <div class="notification-bar" style="background-color: #8B4513; color: white; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+        <span class="speaker-icon">🔈</span>
+	    <span style="margin-left: 10px;">
+	        通知：可用性大于80%在日常使用中基本无感，可以放心使用！！！
+            <a href="https://opsnote.top/archives/zui-xin-ke-yong-dockerjing-xiang-jia-su-qi" 
+                style="color: red; text-decoration: underline; margin-left: 8px;"
+                target="_blank" 
+                rel="noopener noreferrer">
+	            加速器配置方法
+	        </a>
+	    </span>
+    </div>
+    <div class="status-container">
+        <h1 style="background-color: #696969; color: white; padding: 15px; border-radius: 5px;">DockerHub当前可用加速器</h1>
+        
+        {% for target, data in stats.items() %}
+        <div class="target-container">
+            <h2>https://{{ target }}</h2>
+            <div class="status-cards">
+                <div class="status-card"  style="background-color: {% if data.day1 >= 95 %}#32ac2d{% elif data.day1 >= 80 %}#FADE2A{% elif data.day1 >= 50 %}#ed8128{% else %}#f53636{% endif %}; padding: 5px; border-radius: 3px; color: white;">
+                    <div class="status-title">过去24小时可用性</div>
+                    <div class="status-value">{{ data.day1 }}%</div>
+                </div>
+
+                <div class="status-card"  style="background-color: {% if data.day7 >= 95 %}#32ac2d{% elif data.day7 >= 80 %}#FADE2A{% elif data.day7 >= 50 %}#ed8128{% else %}#f53636{% endif %}; padding: 5px; border-radius: 3px; color: white;">
+                    <div class="status-title">过去7天可用性</div>
+                    <div class="status-value">{{ data.day7 }}%</div>
+                </div>
+
+                <div class="status-card" style="background-color: {% if data.day30 >= 95 %}#32ac2d{% elif data.day30 >= 80 %}#FADE2A{% elif data.day30 >= 50 %}#ed8128{% else %}#f53636{% endif %}; padding: 5px; border-radius: 3px; color: white;">
+                    <div class="status-title">过去30天可用性</div>
+                    <div class="status-value">{{ data.day30 }}%</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <hr style="margin: 40px 0; border: 1px solid #dddddd;">
+    
+    <div class="donation-container" style="text-align: center; margin: 20px 0; background-color: #696969; padding: 20px; border-radius: 5px;">
+        <h2 style="color: white;">请博主喝冰可乐！！！</h2>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
+            <div>
+                <img src="./static/yaofan1.jpg" alt="微信捐赠" style="width: 200px;">
+                <p style="margin-top: 10px; color: white;">微信</p>
+            </div>
+            <div>
+                <img src="./static/yaofan2.jpg" alt="支付宝捐赠" style="width: 200px;">
+                <p style="margin-top: 10px; color: white;">支付宝</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

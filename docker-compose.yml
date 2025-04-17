@@ -1,0 +1,17 @@
+version: '3'
+services:
+  registry-mirrors:  
+    image: registry.cn-guangzhou.aliyuncs.com/hzbb/python:3.7.0
+    restart: always
+    hostname: registry-mirrors
+    container_name: registry-mirrors
+    working_dir: /registry-mirrors
+    volumes:
+      - ./:/registry-mirrors
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - 15000:15000
+    environment:
+      - TZ=Asia/Shanghai
+    command: bash /registry-mirrors/run.sh
